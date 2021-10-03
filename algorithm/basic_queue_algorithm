@@ -1,0 +1,62 @@
+import queue
+
+
+class FlashCard:
+    question = ""
+    answer = ""
+
+    def __init__(self, new_question, new_answer):
+        self.question = new_question
+        self.answer = new_answer
+
+    def reset_answer(self, new_answer):
+        self.answer = new_answer
+
+    def reset_question(self, new_question):
+        self.question = new_question
+
+    def get_answer(self):
+        return self.answer
+
+    def get_question(self):
+        return self.question
+
+
+def start_second_queue():
+    while 1:
+        if second.empty():
+            start_first_queue()
+        elem = second.get()
+        print(elem.question)
+        person_answer = input()
+        if person_answer == elem.answer:
+            first.put(elem)
+        else:
+            second.put(elem)
+
+
+def start_first_queue():
+    while 1:
+        if first.empty():
+            start_second_queue()
+        elem = first.get()
+        print(elem.question)
+        person_answer = input()
+        if person_answer == elem.answer:
+            second.put(elem)
+        else:
+            first.put(elem)
+
+
+first = queue.Queue()
+second = queue.Queue()
+print("Введите количество карточек")
+how_many_cards = int(input())
+while how_many_cards > 0:
+    how_many_cards -= 1
+    print("Введите название вопроса")
+    question_to_set = input()
+    print("Введите ответ на вопрос")
+    answer_to_set = input()
+    first.put(FlashCard(question_to_set, answer_to_set))
+start_first_queue()
