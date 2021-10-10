@@ -67,9 +67,9 @@
 
 		<br/>
 
-		<form action="путь к обработчику, который принимает данные">
-  			<p><input type="submit" value="Correct" style="height:100px; width:150px"> &nbsp;&nbsp; 
-  				<input type="submit" value="Incorrect" style="height:100px; width:150px"></p>
+		<form action="{{ url_for('check_answer') }}" method=post>
+  			<p><input type="submit" name="button" value="Correct" style="height:100px; width:150px"> &nbsp;&nbsp; 
+  				<input type="submit" name="button" value="Incorrect" style="height:100px; width:150px"></p>
 		</form>
 
 	</center>

@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, request, redirect
 
 from app import app
 
@@ -10,3 +10,10 @@ def card_front():
 @app.route('/back')
 def card_back():
     return render_template('card_back.html', text='some text')
+
+@app.route('/check_answer', methods=['POST'])
+def check_answer():
+    if request.form['button'] == 'Correct':
+        return 'Correct'
+    else:
+        return 'Incorrect'
