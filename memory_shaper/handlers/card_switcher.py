@@ -1,33 +1,37 @@
-from flask import render_template, request, redirect
-from memory_shaper.tmp_cards import CARDS
 from memory_shaper.algorithm.FlashCardAlgo import get_modified_card
+from memory_shaper.tmp_cards import CARDS, init_queue, get_queue
 
-from flask import render_template, session, redirect, url_for
+from flask import render_template, session, redirect, url_for, request
 
 from app import app
 
 
 @app.route('/')
 def init_session():
-    session['iter'] = -1
+    init_queue()
     return redirect(url_for('card_front'))
 
 
 @app.route('/card_front')
 def card_front():
-    session['iter'] += 1
-    card = CARDS[session['iter'] % len(CARDS)]
-    return render_template('card_front.html', text=card.question)
+    queue = get_queue()
+    card, i = queue.get()
+    queue.put((card, i))
+    return render_template('card_front.html', text=CARDS[i].question)
 
 
 @app.route('/card_back')
 def card_back():
-    card = CARDS[session['iter'] % len(CARDS)]
-    return render_template('card_back.html', text=f'some text {card.answer}')
+    queue = get_queue()
+    card, i = queue.get()
+    queue.put((card, i))
+    return render_template('card_back.html', text=CARDS[i].answer)
 
 
 @app.route('/check_answer', methods=['POST'])
 def check_answer():
-    card = CARDS[session['iter'] % len(CARDS)]
-    CARDS[session['iter'] % len(CARDS)] = get_modified_card(card, request.form['button'] == 'Correct')
+    queue = get_queue()
+    card, i = queue.get()
+    CARDS[i] = get_modified_card(CARDS[i], request.form['button'] == 'Correct')
+    queue.put((CARDS[i].get_next_show_time(), i))
     return redirect(url_for('card_front'))

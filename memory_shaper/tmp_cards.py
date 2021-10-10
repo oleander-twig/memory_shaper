@@ -10,3 +10,15 @@ CARDS = [
     FlashCardAlgorithm(new_question='Merci', new_answer='Thank you'),
     FlashCardAlgorithm(new_question='Merci beaucoup', new_answer='Thank you very much'),
 ]
+
+
+queue = PriorityQueue()
+
+
+def init_queue():
+    for i, card in enumerate(CARDS):
+        queue.put((card.get_next_show_time(), i))
+
+
+def get_queue():
+    return queue
