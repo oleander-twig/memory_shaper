@@ -25,9 +25,10 @@
     transition: transform 0.6s;
     transform-style: preserve-3d;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+
   }
 
-  .flip-card:hover .flip-card-inner {
+  .flip-card-inner .flip-card {
     transform: rotateY(180deg);
   }
 
@@ -70,11 +71,14 @@
 <div class="flip-card">
   <div class="flip-card-inner">
     <div class="flip-card-front">
-      <h1>Question:</h1> 
+      <h1>Question</h1> 
       <p>Question is here</p>
+      <p><input type="button" value="Show answer" style="height:100px; width:150px" onclick="rotate(18deg)"></p>
+      <button><img src="images/umbrella.gif" alt="Зонтик" 
+          style="vertical-align: middle"> Кнопка с рисунком</button>
     </div>
     <div class="flip-card-back">
-      <h1>Answer:</h1> 
+      <h1>Answer</h1> 
       <p>Answer is here</p> 
     </div>
   </div>
