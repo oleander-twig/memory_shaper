@@ -23,14 +23,13 @@
 		    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 
 		 	}
-
-		 	.flip-card-front {
-		    position: absolute;
+			.flip-card-back {
+			position: absolute;
 		    width: 100%;
 		    height: 100%;
 		    -webkit-backface-visibility: hidden;
 		    backface-visibility: hidden;
-		    background-color: #FFFAFA;
+		    background-color: #2980b9;
 		    color: black;
 		  	}
 
@@ -55,9 +54,9 @@
 
 		<div class="flip-card">
 	  		<div class="flip-card-inner">
-		    	<div class="flip-card-front">
-				<h1>Question</h1>
-				{% if text %}
+		    	<div class="flip-card-back">
+		      	<h1>Answer</h1> 
+		      	{% if text %}
 				  <h1>{{text}}</h1>
 				{% else %}
 				  <h1>Text of a question</h1>
@@ -68,8 +67,9 @@
 
 		<br/>
 
-		<form action="{{ url_for('card_back') }}" method=get>
-			<button type="submit"><img src="arrow.jpg" width="25" height="25" alt="Arrow" style="vertical-align: middle">  Show answer</button>
+		<form action="путь к обработчику, который принимает данные">
+  			<p><input type="submit" value="Correct" style="height:100px; width:150px"> &nbsp;&nbsp; 
+  				<input type="submit" value="Incorrect" style="height:100px; width:150px"></p>
 		</form>
 
 	</center>
