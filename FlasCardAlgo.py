@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from math import trunc
 
 
-class FlashCard:
+class FlashCardAlgorithm:
     def __init__(self, new_question, new_answer):
         self.question = new_question
         self.answer = new_answer
@@ -10,15 +10,15 @@ class FlashCard:
         self.next_show = self.last_shown + timedelta(minutes=10)
 
     def count_time_before_next_show(self, const):
-        sec = (10 ** const) * (10 ** const / 4 - 1)
-        sec = max(10 * 60, sec)
+        sec = (10 * (const - 1)) * 60
+        sec = max(2 * 60, sec)
         return timedelta(seconds=trunc(sec))
 
     def reset_time(self, correct):
         self.last_shown = datetime.now()
-        level = 1
+        level = 5
         if not correct:
-            level = 5
+            level = 1
         self.next_show = self.last_shown + self.count_time_before_next_show(level)
 
     def get_next_show_time(self):
@@ -34,7 +34,8 @@ class FlashCard:
         return self.last_shown
 
 
-def get_modified_card(elem: FlashCard, correct: bool) -> FlashCard:
+def get_modified_card(elem: FlashCardAlgorithm, correct: bool) -> FlashCardAlgorithm:
     elem.reset_time(correct)
     return elem
+
 
