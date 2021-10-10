@@ -2,12 +2,39 @@ from datetime import datetime, timedelta
 from math import trunc
 
 
-def count_time_before_next_show(const):
-    sec = (10 ** const) * (10 ** (const / 4) - 1)
-    sec = max(10 * 60, sec)
-    return timedelta(seconds=trunc(sec))
+class FlashCard:
+    def __init__(self, new_question, new_answer):
+        self.question = new_question
+        self.answer = new_answer
+        self.last_shown = datetime.now()
+        self.next_show = self.last_shown + timedelta(minutes=10)
+
+    def count_time_before_next_show(self, const):
+        sec = (10 ** const) * (10 ** const / 4 - 1)
+        sec = max(10 * 60, sec)
+        return timedelta(seconds=trunc(sec))
+
+    def reset_time(self, correct):
+        self.last_shown = datetime.now()
+        level = 1
+        if not correct:
+            level = 5
+        self.next_show = self.last_shown + self.count_time_before_next_show(level)
+
+    def get_next_show_time(self):
+        return self.next_show
+
+    def get_answer(self):
+        return self.answer
+
+    def get_question(self):
+        return self.question
+
+    def get_last_show_time(self):
+        return self.last_shown
 
 
-def update_flash_card(flash_card):
-    const = 6 - flash_card.difficulty
-    flash_card.next_show = flash_card.last_shown + count_time_before_next_show(const)
+def get_modified_card(elem: FlashCard, correct: bool) -> FlashCard:
+    elem.reset_time(correct)
+    return elem
+
