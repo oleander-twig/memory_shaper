@@ -37,5 +37,3 @@ class FlashCardAlgorithm:
 def get_modified_card(elem: FlashCardAlgorithm, correct: bool) -> FlashCardAlgorithm:
     elem.reset_time(correct)
     return elem
-
-
