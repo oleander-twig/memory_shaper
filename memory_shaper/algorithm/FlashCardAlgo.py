@@ -9,7 +9,8 @@ class FlashCardAlgorithm:
         self.last_shown = datetime.now()
         self.next_show = self.last_shown + timedelta(minutes=10)
 
-    def count_time_before_next_show(self, const):
+    @staticmethod
+    def count_time_before_next_show(const):
         sec = (10 * (const - 1)) * 60
         sec = max(2 * 60, sec)
         return timedelta(seconds=trunc(sec))
